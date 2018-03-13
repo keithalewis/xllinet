@@ -21,11 +21,14 @@ namespace Win {
         Hinternet& operator=(const Hinternet&) = delete;
         Hinternet(Hinternet&& i)
             : h(i.h)
-        { }
+        {
+            i.h = INVALID_HANDLE_VALUE;
+        }
         Hinternet& operator=(Hinternet&& i) = delete;
         virtual ~Hinternet()
         {
-            InternetCloseHandle(h);
+            if (h != INVALID_HANDLE_VALUE)
+                InternetCloseHandle(h);
         }
         operator const HINTERNET() const
         {
